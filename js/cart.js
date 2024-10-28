@@ -1,111 +1,126 @@
-let cart = {};
+let cart = JSON.parse(localStorage.getItem("cart")) || {};
 
+// Wait for DOM content to load before setting up event listeners
 document.addEventListener("DOMContentLoaded", function () {
-  // Add event listeners to "Add to Cart" buttons
   document.querySelectorAll(".add-to-cart").forEach((button) => {
+    if (cart[button.dataset.id]) {
+      button.disabled = true;
+      button.classList.add("bg-gray-500", "cursor-not-allowed");
+    }
+
     button.addEventListener("click", addToCart);
   });
-  console.log("Event listeners added to 'Add to Cart' buttons");
+
+  updateCartCount();
+  updateCartUI();
 });
 
-// Add to Cart function
+// Function to add item to the cart
 function addToCart(event) {
   const button = event.target;
   const itemId = button.dataset.id;
   const itemName = button.dataset.name;
   const itemPrice = parseFloat(button.dataset.price);
+  const itemImage = button.dataset.image;
 
-  // Add item to cart if not already added
+  // Check if the item is not already in the cart
   if (!cart[itemId]) {
     cart[itemId] = {
       name: itemName,
       price: itemPrice,
+      image: itemImage,
       quantity: 1,
     };
-    button.disabled = true; // Disable button to prevent duplicate addition
+
+    button.disabled = true;
     button.classList.add("bg-gray-500", "cursor-not-allowed");
-    console.log(`Added ${itemName} to cart`);
+    saveCart();
+    updateCartCount();
     updateCartUI();
   }
 }
 
-// Update cart sidebar and cart count
+// Function to update the cart's item count
+function updateCartCount() {
+  const cartCount = Object.values(cart).reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+  document.querySelectorAll(".cart-count").forEach((element) => {
+    element.textContent = cartCount;
+  });
+}
+
+// Function to save cart to local storage
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+// Function to update the cart in the sidebar
 function updateCartUI() {
   const cartItems = document.getElementById("cart-items");
-  cartItems.innerHTML = ""; // Clear current items
+  const cartTotal = document.getElementById("cart-total");
+  cartItems.innerHTML = "";
 
-  // Populate cart with items
+  // Loop through each item in the cart and display it in the sidebar
+  let totalAmount = 0;
   Object.keys(cart).forEach((itemId) => {
     const item = cart[itemId];
+    const itemTotalPrice = (item.price * item.quantity).toFixed(2);
+    totalAmount += parseFloat(itemTotalPrice);
+
     const li = document.createElement("li");
-    li.className = "flex justify-between items-center mb-2";
+    li.className =
+      "flex border border-white justify-between items-center p-2 rounded-lg relative mb-4";
     li.innerHTML = `
-            <span>${item.name} - $${item.price}</span>
-            <div class="flex items-center">
-                <button onclick="decreaseQuantity('${itemId}')" class="px-2">-</button>
-                <span class="px-2">${item.quantity}</span>
-                <button onclick="increaseQuantity('${itemId}')" class="px-2">+</button>
-                <button onclick="removeItem('${itemId}')" class="ml-4 text-red-500">Remove</button>
-            </div>
-        `;
+      <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded mr-4" />
+      <div class="flex-grow">
+        <span>${item.name} - $${itemTotalPrice}</span>
+      </div>
+      <div class="flex items-center">
+        <button onclick="decreaseQuantity('${itemId}')" class="px-2">-</button>
+        <span class="px-2">${item.quantity}</span>
+        <button onclick="increaseQuantity('${itemId}')" class="px-2">+</button>
+        <button onclick="removeItem('${itemId}')" class="ml-2 absolute -top-3 bg-white px-2 text-lg py-0 -right-2 text-orange-600 rounded-full">&times;</button>
+      </div>
+    `;
     cartItems.appendChild(li);
   });
 
-  // Update total price and item count
-  updateTotal();
-  updateCartCount();
+  cartTotal.textContent = totalAmount.toFixed(2);
 }
 
-// Increase quantity
+// Function to increase the quantity of an item in the cart
 function increaseQuantity(itemId) {
-  cart[itemId].quantity++;
-  console.log(
-    `Increased quantity of ${cart[itemId].name} to ${cart[itemId].quantity}`
-  );
+  cart[itemId].quantity += 1;
+  saveCart();
+  updateCartCount();
   updateCartUI();
 }
 
-// Decrease quantity
+// Function to decrease the quantity of an item in the cart
 function decreaseQuantity(itemId) {
   if (cart[itemId].quantity > 1) {
-    cart[itemId].quantity--;
+    cart[itemId].quantity -= 1;
   } else {
     delete cart[itemId];
-    document.querySelector(`[data-id="${itemId}"]`).disabled = false; // Re-enable button
-    document
-      .querySelector(`[data-id="${itemId}"]`)
-      .classList.remove("bg-gray-500", "cursor-not-allowed");
   }
-  console.log(`Decreased quantity or removed ${itemId} from cart`);
+  saveCart();
+  updateCartCount();
   updateCartUI();
 }
 
-// Remove item from cart
+// Function to remove an item from the cart
 function removeItem(itemId) {
   delete cart[itemId];
-  document.querySelector(`[data-id="${itemId}"]`).disabled = false; // Re-enable button
-  document
-    .querySelector(`[data-id="${itemId}"]`)
-    .classList.remove("bg-gray-500", "cursor-not-allowed");
-  console.log(`Removed ${itemId} from cart`);
+  saveCart();
+  updateCartCount();
   updateCartUI();
-}
 
-// Update total price
-function updateTotal() {
-  const total = Object.values(cart).reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-  document.getElementById("cart-total").textContent = total.toFixed(2);
-}
-
-// Update cart count in navbar
-function updateCartCount() {
-  const itemCount = Object.values(cart).reduce(
-    (sum, item) => sum + item.quantity,
-    0
-  );
-  document.getElementById("cart-count").textContent = itemCount;
-  console.log(`Cart count updated to ${itemCount}`);
+  // Re-enable the 'Add to Cart' button for the removed item
+  const addButton = document.querySelector(`.add-to-cart[data-id="${itemId}"]`);
+  if (addButton) {
+    addButton.disabled = false;
+    addButton.classList.remove("bg-gray-500", "cursor-not-allowed");
+  }
 }

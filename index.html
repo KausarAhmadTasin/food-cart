@@ -4,8 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Food Cart</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/styles.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha384-epI7gI3dMSFY3v/2NHZ9dxBdscUV1vG9ZHD9Ak72Mph+Hqf+b/jRji08+OYyl4IY"
+      crossorigin="anonymous"
+    />
   </head>
   <body class="bg-white">
     <!-- 
@@ -14,15 +21,23 @@
 
     -->
     <nav
-      class="bg-orange-50 pl-10 py-4 pr-96 flex justify-between items-center"
+      class="fixed w-full bg-orange-50 pl-10 py-4 pr-96 flex justify-between items-center"
     >
       <h1 class="text-black text-2xl">Food Cart</h1>
       <div class="flex gap-x-8 items-center">
         <div class="relative text-white">
-          <img class="h-8" src="./resources/shopping-bag.png" alt="Cart" />
+          <svg
+            class="w-7"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 448 512"
+          >
+            <path
+              d="M352 160v-32C352 57.4 294.6 0 224 0 153.4 0 96 57.4 96 128v32H0v272c0 44.2 35.8 80 80 80h288c44.2 0 80-35.8 80-80V160h-96zm-192-32c0-35.3 28.7-64 64-64s64 28.7 64 64v32H160v-32zm160 120c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm-192 0c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24z"
+            />
+          </svg>
           <p
-            id="cart-count"
-            class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"
+            id=""
+            class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center cart-count"
           >
             0
           </p>
@@ -36,7 +51,7 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="w-3/4 px-6 py-2">
+    <div class="w-3/4 px-6 py-2 pt-24">
       <!-- 
       
       -------- Food Items Section ---------
@@ -87,6 +102,7 @@
             data-id="1"
             data-name="Pizza"
             data-price="10"
+            data-image="./resources/alan-hardman-SU1LFoeEUkk-unsplash.jpg"
           >
             Add to Cart
           </button>
@@ -97,7 +113,9 @@
           </button>
         </div>
 
-        <!-- Food Item -->
+        <!-- 
+              Food Item 
+        -->
         <div class="bg-gray-100 flex flex-col p-4 rounded-md shadow">
           <img class="rounded-md" src="./resources/burger.jpg" alt="Burger" />
           <div class="flex-grow">
@@ -115,6 +133,7 @@
             data-id="2"
             data-name="Burger"
             data-price="8"
+            data-image="./resources/burger.jpg"
           >
             Add to Cart
           </button>
@@ -125,7 +144,9 @@
           </button>
         </div>
 
-        <!-- Food Item -->
+        <!-- 
+              Food Item 
+        -->
         <div class="bg-gray-100 flex flex-col p-4 rounded-md shadow">
           <img
             class="rounded-md w-[16.31rem] h-[10.81rem]"
@@ -147,6 +168,7 @@
             data-id="3"
             data-name="Pasta"
             data-price="12"
+            data-image="./resources/pasta.jpg"
           >
             Add to Cart
           </button>
@@ -158,14 +180,39 @@
         </div>
       </div>
 
-      <!-- Cart Sidebar -->
+      <!-- 
+      
+      ------------- Cart Sidebar ----------------- 
+      
+      -->
       <div
-        class="fixed right-0 top-0 h-full w-1/4 bg-white shadow p-6 overflow-y-auto"
+        class="fixed flex flex-col right-0 top-0 h-full w-1/4 bg-white shadow py `-6 overflow-y-auto"
         id="cart-sidebar"
       >
-        <h2 class="text-2xl font-bold mb-4">Your Cart</h2>
-        <ul id="cart-items" class="mb-4"></ul>
-        <div class="flex justify-between items-center font-semibold">
+        <div class="flex px-6 pt-4 items-center gap-x-4 text-orange-600 mb-6">
+          <svg
+            class="w-7 text-orange-500"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 448 512"
+          >
+            <path
+              fill="currentColor"
+              d="M352 160v-32C352 57.4 294.6 0 224 0 153.4 0 96 57.4 96 128v32H0v272c0 44.2 35.8 80 80 80h288c44.2 0 80-35.8 80-80V160h-96zm-192-32c0-35.3 28.7-64 64-64s64 28.7 64 64v32H160v-32zm160 120c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm-192 0c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24z"
+            />
+          </svg>
+
+          <div class="flex gap-x-1">
+            <p id="" class="text-xl cart-count">0</p>
+            <p class="text-xl">Items</p>
+          </div>
+        </div>
+
+        <div class="flex-grow bg-orange-600 px-3 py-10 text-white">
+          <ul id="cart-items" class="mb-4"></ul>
+        </div>
+        <div
+          class="flex justify-between items-center text-orange-600 font-semibold p-4"
+        >
           <span>Total: $<span id="cart-total">0</span></span>
         </div>
       </div>
