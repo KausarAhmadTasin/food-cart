@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Cart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body class="bg-gray-100">
+    <!-- 
+                    
+        -------- Navbar --------
+
+    -->
+    <nav
+      class="bg-orange-50 pl-10 py-4 pr-96 flex justify-between items-center"
+    >
+      <h1 class="text-black text-2xl">Food Cart</h1>
+      <div class="flex gap-x-8 items-center">
+        <div class="relative text-white">
+          <img class="h-8" src="./resources/shopping-bag.png" alt="Cart" />
+          <p
+            id="cart-count"
+            class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"
+          >
+            0
+          </p>
+        </div>
+        <button
+          class="bg-orange-600 px-6 py-2 rounded-md text-white font-medium"
+        >
+          Order Now
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto p-6">
+      <!-- Food Items Section -->
+      <h1 class="text-3xl font-bold mb-4">Our Food Items</h1>
+      <div id="food-items" class="grid grid-cols-3 gap-6">
+        <!-- Example Food Item -->
+        <div class="bg-white p-4 rounded shadow">
+          <h2 class="text-xl font-semibold">Pizza</h2>
+          <p class="text-gray-700">Price: $10</p>
+          <button
+            class="mt-2 add-to-cart bg-blue-500 text-white px-4 py-2 rounded"
+            data-id="1"
+            data-name="Pizza"
+            data-price="10"
+          >
+            Add to Cart
+          </button>
+        </div>
+        <!-- Add more items as needed -->
+      </div>
+
+      <!-- Cart Sidebar -->
+      <div
+        class="fixed right-0 top-0 h-full w-1/4 bg-white shadow p-6 overflow-y-auto"
+        id="cart-sidebar"
+      >
+        <h2 class="text-2xl font-bold mb-4">Your Cart</h2>
+        <ul id="cart-items" class="mb-4"></ul>
+        <div class="flex justify-between items-center font-semibold">
+          <span>Total: $<span id="cart-total">0</span></span>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/cart.js"></script>
+  </body>
+</html>
