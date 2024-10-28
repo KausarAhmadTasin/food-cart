@@ -34,20 +34,19 @@ function addToCart(event) {
 
     button.disabled = true;
     button.classList.add("bg-gray-500", "cursor-not-allowed");
-    saveCart();
+
+    // Update unique item count and cart UI
     updateCartCount();
     updateCartUI();
+    saveCart();
   }
 }
 
 // Function to update the cart's item count
 function updateCartCount() {
-  const cartCount = Object.values(cart).reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
+  const uniqueItemCount = Object.keys(cart).length; // Counts unique items
   document.querySelectorAll(".cart-count").forEach((element) => {
-    element.textContent = cartCount;
+    element.textContent = uniqueItemCount;
   });
 }
 
@@ -75,12 +74,13 @@ function updateCartUI() {
     li.innerHTML = `
       <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded mr-4" />
       <div class="flex-grow">
-        <span>${item.name} - $${itemTotalPrice}</span>
+        <p class="text-lg font-semibold">${item.name} </p>
+        <p class="text-sm ">$${itemTotalPrice}</p>
       </div>
       <div class="flex items-center">
-        <button onclick="decreaseQuantity('${itemId}')" class="px-2">-</button>
-        <span class="px-2">${item.quantity}</span>
-        <button onclick="increaseQuantity('${itemId}')" class="px-2">+</button>
+        <button onclick="decreaseQuantity('${itemId}')" class="px-2 bg-gray-300 rounded-md text-black py-2 pl-3">-</button>
+        <span class="px-2 bg-white text-black px-5">${item.quantity}</span>
+        <button onclick="increaseQuantity('${itemId}')" class="px-2 bg-gray-300 rounded-md text-black py-2">+</button>
         <button onclick="removeItem('${itemId}')" class="ml-2 absolute -top-3 bg-white px-2 text-lg py-0 -right-2 text-orange-600 rounded-full">&times;</button>
       </div>
     `;
@@ -94,7 +94,6 @@ function updateCartUI() {
 function increaseQuantity(itemId) {
   cart[itemId].quantity += 1;
   saveCart();
-  updateCartCount();
   updateCartUI();
 }
 
@@ -104,6 +103,13 @@ function decreaseQuantity(itemId) {
     cart[itemId].quantity -= 1;
   } else {
     delete cart[itemId];
+    const addButton = document.querySelector(
+      `.add-to-cart[data-id="${itemId}"]`
+    );
+    if (addButton) {
+      addButton.disabled = false;
+      addButton.classList.remove("bg-gray-500", "cursor-not-allowed");
+    }
   }
   saveCart();
   updateCartCount();

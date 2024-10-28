@@ -186,10 +186,13 @@
       
       -->
       <div
-        class="fixed flex flex-col right-0 top-0 h-full w-1/4 bg-white shadow py `-6 overflow-y-auto"
+        id="cart-sidebar"
+        class="fixed flex flex-col right-0 top-0 h-full w-1/4 bg-white shadow overflow-y-auto transform translate-x-full transition-transform"
         id="cart-sidebar"
       >
-        <div class="flex px-6 pt-4 items-center gap-x-4 text-orange-600 mb-6">
+        <div
+          class="flex px-6 py-4 items-center justify-center gap-x-4 text-orange-600"
+        >
           <svg
             class="w-7 text-orange-500"
             xmlns="http://www.w3.org/2000/svg"
@@ -205,6 +208,12 @@
             <p id="" class="text-xl cart-count">0</p>
             <p class="text-xl">Items</p>
           </div>
+          <button
+            id="close-sidebar"
+            class="ml-auto px-4 py-1 bg-white border border-orange-600 text-orange-600 rounded-md font-medium"
+          >
+            Close
+          </button>
         </div>
 
         <div class="flex-grow bg-orange-600 px-3 py-10 text-white">
@@ -218,6 +227,7 @@
       </div>
     </div>
 
+    <script src="js/sidebar.js"></script>
     <script src="js/cart.js"></script>
   </body>
 </html>
