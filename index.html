@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/styles.css" />
   </head>
-  <body class="bg-gray-100">
+  <body class="bg-white">
     <!-- 
                     
         -------- Navbar --------
@@ -36,40 +36,124 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="w-3/4 border p-6">
+    <div class="w-3/4 px-6 py-2">
       <!-- 
       
       -------- Food Items Section ---------
       
       -->
-      <h1 class="text-4xl text-center text-orange-600 font-semibold mb-4">
+      <h1 class="text-4xl text-center text-orange-600 font-semibold mb-2">
         CHICKEN CRISPER<span class="font-normal">Ⓡ</span> COMBOS
       </h1>
       <p class="text-center text-sm">
         <span class="text-orange-600">Menu</span>
         <span class="font-bold">></span> CHICKEN CRISPERⓇ COMBOS
       </p>
-      <p class="text-center my-4">
+      <p class="text-center my-2 mb-4">
         Find everything from our big mouth BurgerⓇ, out always sizlling, Full-on
         Fajitas and our famous chicken crispersⓇ
       </p>
-      <div class="flex justify-end w-11/12">
-        <select class="py-2 px-4" name="menu" id="">
+      <div class="flex justify-end w-full">
+        <select
+          class="py-2 px-4 border border-gray-400 rounded-md"
+          name="menu"
+          id=""
+        >
           <option value="menu">Menu</option>
         </select>
       </div>
-      <div id="food-items" class="grid grid-cols-3 gap-6 mt-6">
-        <!-- Food Item -->
-        <div class="bg-white p-4 rounded shadow">
-          <h2 class="text-xl font-semibold">Pizza</h2>
-          <p class="text-gray-700">Price: $10</p>
+      <div id="food-items" class="grid grid-cols-3 gap-6 my-6">
+        <!-- 
+                  Food Item
+         -->
+        <div class="bg-gray-100 flex flex-col p-4 rounded-md shadow">
+          <img
+            class="rounded-md"
+            src="./resources/alan-hardman-SU1LFoeEUkk-unsplash.jpg"
+            alt="Pizza"
+          />
+          <div class="flex-grow">
+            <h2 class="text-xl font-semibold mt-2 truncate">Pizza</h2>
+            <p class="text-gray-700">10$/each</p>
+          </div>
+          <p class="text-gray-700 line-clamp-3 my-2">
+            Pizza is a savory Italian dish that has become a global favorite. It
+            typically consists of a round, flat base made from wheat dough,
+            topped with tomato sauce, cheese, and a variety of toppings like
+            pepperoni, vegetables, and herbs.
+          </p>
           <button
-            class="mt-2 add-to-cart bg-blue-500 text-white px-4 py-2 rounded"
+            class="mt-2 w-full disabled:bg-gray-500 add-to-cart bg-orange-500 text-white px-4 py-2 rounded"
             data-id="1"
             data-name="Pizza"
             data-price="10"
           >
             Add to Cart
+          </button>
+          <button
+            class="border-orange-500 border rounded-md text-orange-600 w-full mt-4 py-2 font-semibold"
+          >
+            Customize
+          </button>
+        </div>
+
+        <!-- Food Item -->
+        <div class="bg-gray-100 flex flex-col p-4 rounded-md shadow">
+          <img class="rounded-md" src="./resources/burger.jpg" alt="Burger" />
+          <div class="flex-grow">
+            <h2 class="text-xl font-semibold mt-2 truncate">Burger</h2>
+            <p class="text-gray-700">8$/each</p>
+          </div>
+          <p class="text-gray-700 line-clamp-3 my-2">
+            A burger is a popular American dish that consists of a cooked patty
+            of ground meat, typically beef, placed inside a sliced bread roll or
+            bun. Toppings often include cheese, lettuce, tomato, pickles,
+            onions, and condiments like ketchup or mustard.
+          </p>
+          <button
+            class="mt-2 w-full disabled:bg-gray-500 add-to-cart bg-orange-500 text-white px-4 py-2 rounded"
+            data-id="2"
+            data-name="Burger"
+            data-price="8"
+          >
+            Add to Cart
+          </button>
+          <button
+            class="border-orange-500 border rounded-md text-orange-600 w-full mt-4 py-2 font-semibold"
+          >
+            Customize
+          </button>
+        </div>
+
+        <!-- Food Item -->
+        <div class="bg-gray-100 flex flex-col p-4 rounded-md shadow">
+          <img
+            class="rounded-md w-[16.31rem] h-[10.81rem]"
+            src="./resources/pasta.jpg"
+            alt="Pasta"
+          />
+          <div class="flex-grow">
+            <h2 class="text-xl font-semibold mt-2 truncate">Pasta</h2>
+            <p class="text-gray-700">12$/each</p>
+          </div>
+          <p class="text-gray-700 line-clamp-3 my-2">
+            Pasta is a staple of Italian cuisine, made from wheat flour and
+            water. It can be prepared in various shapes and paired with sauces
+            like marinara, alfredo, or pesto, and it’s often topped with cheese,
+            herbs, or vegetables.
+          </p>
+          <button
+            class="mt-2 w-full disabled:bg-gray-500 add-to-cart bg-orange-500 text-white px-4 py-2 rounded"
+            data-id="3"
+            data-name="Pasta"
+            data-price="12"
+          >
+            Add to Cart
+          </button>
+          <button
+            class="border-orange-500 border rounded-md text-orange-600 w-full mt-4 py-2 font-semibold"
+          >
+            Customize
           </button>
         </div>
       </div>
